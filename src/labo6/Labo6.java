@@ -5,6 +5,8 @@
  */
 package labo6;
 
+import vista.Consulta;
+
 /**
  *
  * @author LN710Q
@@ -17,7 +19,7 @@ public class Labo6 {
     public static void main(String[] args) {
         
         
-        
+        new Consulta().setVisible(true);
         
         
         
