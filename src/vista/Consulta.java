@@ -7,12 +7,15 @@ package vista;
 
 import dao.FiltroDao;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -152,6 +155,57 @@ public class Consulta extends JFrame {
     }
     
     public void eventos(){
+        insertar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                FiltroDao fd=new FiltroDao();
+                Filtro f= new Filtro(codigo.getText(),marca.getSelectedItem().toString(),
+                Integer.parseInt(stock.getText()),true);
+                if(no.isSelected()){
+                    f.setExistencia(false);
+                }
+                
+                if(fd.create(f)){
+                    JOptionPane.showMessageDialog(null, "Filtro registrado con exito");
+                    limpiarCampos();
+                    llenarTabla();
+                }else{
+                    JOptionPane.showMessageDialog(null,"Ocurrio un problema al momento de crear el filtro");
+                }
+            }
+        });
         
+        actualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                FiltroDao fd= new FiltroDao();
+                Filtro f = new Filtro(codigo.getText(),marca.getSelectedItem().toString(),Integer.parseInt(stock.getText()),true);
+                if(no.isSelected()){
+                    f.setExistencia(false);
+                }
+                if(fd.update(f)){
+                    JOptionPane.showMessageDialog(null, "Filtro modificado con exito");
+                    limpiarCampos();
+                    llenarTabla();
+                }else{
+                    JOptionPane.showMessageDialog(null,"Ocurrio un problema al momento de modificar el filtro");
+                }
+            }
+        });
+        
+        eliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                FiltroDao fd= new FiltroDao();
+                if(fd.delete(codigo.getText())){
+                    JOptionPane.showMessageDialog(null, "Filtro eliminado con exito");
+                    limpiarCampos();
+                    llenarTabla();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Ocurrio un problema al momento de eliminar el filtro");
+                }
+            }
+        });
     }
 }
