@@ -123,11 +123,6 @@ public class FiltroDao implements metodos<Filtro> {
         }
         return all;
     }
-    
-    
-
-
-
 }
 
 
